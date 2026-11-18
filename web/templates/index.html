@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Altum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    </div>
+    <!-- PARTE DE PRESENTACIÓN-->
+    <h2>Presentación del Proyecto ALTUM</h2> 
+    <p>Se trata de la página web del Banco ALTUM. Para tener una base y así empezar el Proyecto 1 de IAWE, se desarrollan los html, css y bootstrap con la ayuda de la IA.</p>
+    <p>Como propósito, es poder simular un servicio Bancario sencillo y poder usarlo como idea para el proyecto final intermodular.</p>
+    <p>Respecto a la práctica: <br>
+    Creación del html base : Incluye Navbar y Footer (base.html)</p>
+    <p>TODOS LOS APARTADOS SE ENCUENTRAN EN "¿QUÉ NECESITAS?"</p>
+    <ol>
+        <li>Listado de elementos: En /listaUsuarios = "VER USUARIOS" (listado.html)  </li>
+        <li>Página de detalle: En /listaUsuarios/num_usuarioID = FILTRAR USUARIO (detalle.html) </li>
+        <li>Consulta mediante formulario: Formulario GET en /buscarUsuario = "BUSCAR CONSULTA" (buscar.html)  </li>
+        <li>Añadir nuevos elementos: "Hazte Cliente" (en /registro) o "ABRIR CUENTA" (registro.html) </li>
+        <li>Validación: Dentro de la función registro(), el formulario valida si es mayor de 18, campos obligatorios y rango de dinero </li>
+        <li>Resumen/estadísticas : En /estadisticas = "ESTADISTICAS" (estadisticas.html) </li>
+        <li>Página personalizada: "En /simulador = "SIMULADOR DE HIPOTECA" (simulador.html) </li>
+        <li>Página personalizada (extra): Añadí el html del formulario de contacto para no olvidarme de él en futuros cambios, aunque no está desarrollada. (contacto.html) </li>
+    </ol>
+    <div>
+    <!-- ¿QUÉ NECESITAS? (Botones directos a los apartados) -->
+    <div class="py-5 px-4 rounded-4 shadow-sm text-center mb-4" style="background-color: #C0EFD8;">
+        <h3 class="fw-bold text-success mb-4" style="letter-spacing: 1px;">¿QUÉ NECESITAS?</h3>
+        
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{{ url_for('listado') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">VER USUARIOS</a>
+            <a href="{{ url_for('detalle') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">VER DETALLES</a>
+            <a href="{{ url_for('buscar') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">BUSCAR CONSULTA</a>
+            <a href="{{ url_for('registro') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">ABRIR CUENTA</a>
+            <a href="{{ url_for('estadisticas') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">ESTADÍSTICAS</a>
+            <a href="{{ url_for('simuladorHipoteca') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">SIMULAR HIPOTECA</a>
+            <a href="{{ url_for('contacto') }}" class="btn btn-light border border-success text-dark px-4 py-2 rounded-pill fw-semibold shadow-sm">CONTACTO</a>
+        </div>
+    </div>
+
+    <!-- CARRUSEL (no acabado) -->
+    <div class="row bg-white p-4 rounded-4 shadow-sm align-items-center mb-5 border">
+        <!-- COLUMNA IZQUIERDA: CARRUSEL DE FOTOS -->
+        <div class="col-lg-6 border-end py-3">
+            <div id="altumCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded-3 overflow-hidden">
+                    
+                    <!-- Diapositiva 1 -->
+                    <div class="carousel-item active text-center bg-light p-4">
+                        <img src="{{ url_for('static', filename='images/hucha.jpg') }}" class="d-block mx-auto img-fluid rounded" alt="Hucha" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                    
+                    <!-- Diapositiva 2 -->
+                    <div class="carousel-item text-center bg-light p-4">
+                        <img src="{{ url_for('static', filename='images/casa.jpg') }}" class="d-block mx-auto img-fluid rounded" alt="Imagen de una casa" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                    
+                    <!-- Diapositiva 3 -->
+                    <div class="carousel-item text-center bg-light p-4">
+                        <img src="{{ url_for('static', filename='images/familia.jpg') }}" class="d-block mx-auto img-fluid rounded" alt="Familia feliz en el sofá" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+
+                <!-- Controles para pasar de foto -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#altumCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#altumCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: TÍTULO E INFORMACIÓN DINÁMICA SEGÚN TU DISEÑO  (no acabado)-->
+        <div class="col-lg-6 px-4 py-3 text-center">
+            <h3 class="fw-bold text-dark mb-4" style="letter-spacing: 1px;">AHORRA CON NOSOTROS</h3>
+            
+            <div class="p-4 mb-4 rounded-3 shadow-sm" style="background-color: #f7ebe8;">
+                <p class="mb-0 fs-5 text-secondary fw-medium">
+                    No esperes más y aprovecha nuestros descuentos exclusivos para clientes Altum. Cuida de tus ahorros hoy.
+                </p>
+            </div>
+
+            <div>
+                <a href="{{ url_for('listado') }}" class="btn btn-outline-success rounded-pill px-5 py-2 fw-bold" style="border-color: #00ffaa; color: #0b222d; background-color: #76eec6;">
+                    VER DESCUENTOS
+                </a>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+{% endblock %}

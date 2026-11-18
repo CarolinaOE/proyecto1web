@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Contacto - Altum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm col-md-6 mx-auto p-4">
+        <h2 class="mb-3 text-dark">Contacto</h2>
+        <p class="text-muted">¿Tienes alguna duda con tu cuenta de Banco Altum? Escríbenos.</p>
+        
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="nombre@correo.com">
+            </div>
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Enviar mensaje</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

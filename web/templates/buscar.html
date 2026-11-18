@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Buscar clientes - Altum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="fw-bold mb-1">Buscar clientes</h1>
+    <p class="text-muted">Elige un criterio y escribe su valor para buscar al cliente en concreto.</p>
+    
+    
+    <p> Criterios disponibles: Puedes buscar por "Nombre", Género (ej: Mujer, Hombre, Otro) o Tipo de cuenta</strong> (ej: Corriente, Ahorro, Joven).
+    </p>
+
+    <form id="formBuscar" method="GET" action="{{ url_for('buscar') }}" class="card shadow-sm border-0 rounded-4 p-4 mb-4" >
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="criterio" class="form-label fw-semibold">Buscar por</label>
+                <select id="criterio" name="criterio" class="form-select">
+                    <option value="nombre" {% if criterio == 'nombre' %}selected{% endif %}>Nombre</option>
+                    <option value="genero" {% if criterio == 'genero' %}selected{% endif %}>Género</option>
+                    <option value="tipo_cuenta" {% if criterio == 'tipo_cuenta' %}selected{% endif %}>Tipo de cuenta</option>
+                </select>
+            </div>
+
+            <div class="col-md-5">
+                <label for="valor" class="form-label fw-semibold">Valor</label>
+                <div id="campoValor">
+                    <input type="text" id="valor" name="valor" class="form-control" value="{{ valor }}" placeholder="Escribe lo que deseas buscar..." required>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-dark w-100 rounded-pill py-2">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    {% if criterio and valor %}
+        <p class="fw-semibold">
+            {{ resultados | length }} resultado{{ 's' if resultados | length != 1 }}
+            para el criterio «{{ criterio }}»: «{{ valor }}»
+        </p>
+
+        {% if resultados %}
+            <div class="list-group shadow-sm">
+                {% for u in resultados %}
+                <a href="{{ url_for('detalle', usuario_id=u.id) }}"
+                   class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <span>
+                        <span class="fw-semibold">{{ u.nombre }} {{ u.apellido1 }} {{ u.apellido2 }}</span>
+                        <span class="text-muted ms-2">{{ u.tipo_cuenta }} · {{ u['género'] }}</span>
+                    </span>
+                    <span>
+                        {{ '%.2f' | format(u.saldo) }} €
+                        <span class="badge ms-2 {{ 'text-bg-success' if u.activo else 'text-bg-secondary' }}">
+                            {{ 'Activo' if u.activo else 'Inactivo' }}
+                        </span>
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                No se ha encontrado ningún cliente con ese criterio. Prueba con otro valor.
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

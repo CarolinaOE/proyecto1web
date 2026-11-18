@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Crea tu cuenta bancaria en Altum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm border-0 bg-white p-4 p-md-5 rounded-4 mx-auto" style="max-width: 800px;">
+
+        <div class="text-center mb-4">
+            <h1 class="fw-bold text-dark">Únete a la familia Altum</h1>
+            <p class="text-muted">
+                Por favor, complete sus datos para solicitar la apertura de su cuenta.
+            </p>
+        </div>
+
+        <!-- Si hay errores generales de validación, se muestra -->
+        {% if errores and errores.general %}
+            <div class="alert alert-danger">{{ errores.general }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <h4 class="text-success fw-bold mb-3 border-bottom pb-2">1. Datos personales</h4>
+            <div class="mb-3">
+                <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                <input type="text" class="form-control {% if errores and errores.nombre %}is-invalid{% endif %}" id="nombre" name="nombre"
+                       placeholder="Introduce tu nombre" value="{{ datos_previos.nombre if datos_previos else '' }}" required>
+                {% if errores and errores.nombre %}
+                    <div class="invalid-feedback">{{ errores.nombre }}</div>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="apellido1" class="form-label fw-semibold">Primer apellido</label>
+                    <input type="text" class="form-control {% if errores and errores.apellido1 %}is-invalid{% endif %}" id="apellido1" name="apellido1" 
+                           value="{{ datos_previos.apellido1 if datos_previos else '' }}" required>
+                    {% if errores and errores.apellido1 %}
+                        <div class="invalid-feedback">{{ errores.apellido1 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="apellido2" class="form-label fw-semibold">Segundo apellido</label>
+                    <input type="text" class="form-control" id="apellido2" name="apellido2" 
+                           value="{{ datos_previos.apellido2 if datos_previos else '' }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="documento" class="form-label fw-semibold">Tipo de documento</label>
+                    <select id="documento" name="documento" class="form-select">
+                        <option value="DNI" {% if datos_previos and datos_previos.documento == 'DNI' %}selected{% endif %}>DNI</option>
+                        <!--<option value="NIE" {% if datos_previos and datos_previos.documento == 'NIE' %}selected{% endif %}>NIE</option>
+                        <option value="Pasaporte" {% if datos_previos and datos_previos.documento == 'Pasaporte' %}selected{% endif %}>Pasaporte</option>-->
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="numero" class="form-label fw-semibold">Número de documento (DNI/NIE)</label>
+                    <input type="text" class="form-control {% if errores and errores.usuario %}is-invalid{% endif %}" id="numero" name="usuario"
+                           placeholder="12345678A" value="{{ datos_previos.usuario if datos_previos else '' }}" required>
+                    {% if errores and errores.usuario %}
+                        <div class="invalid-feedback">{{ errores.usuario }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fecha" class="form-label fw-semibold">Fecha de nacimiento</label>
+                    <input type="text" class="form-control" id="fecha" name="fechaNacimiento" 
+                           placeholder="DD/MM/AAAA" value="{{ datos_previos.fechaNacimiento if datos_previos else '' }}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="genero" class="form-label fw-semibold">Género</label>
+                    <select id="genero" name="género" class="form-select" required>
+                        <option value="">Seleccionar</option>
+                        <option value="Mujer" {% if datos_previos and datos_previos.género == 'Mujer' %}selected{% endif %}>Mujer</option>
+                        <option value="Hombre" {% if datos_previos and datos_previos.género == 'Hombre' %}selected{% endif %}>Hombre</option>
+                        <option value="Otro" {% if datos_previos and datos_previos.género == 'Otro' %}selected{% endif %}>Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="nacionalidad" class="form-label fw-semibold">Nacionalidad</label>
+                <input type="text" class="form-control" id="nacionalidad"
+                       name="nacionalidad" placeholder="Ej. española" value="{{ datos_previos.nacionalidad if datos_previos else 'española' }}">
+            </div>
+
+            <h4 class="text-success fw-bold mb-3 border-bottom pb-2">2. Datos de contacto</h4>
+
+            <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="ejemplo@correo.com" value="{{ datos_previos.email if datos_previos else '' }}" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="telefono" class="form-label fw-semibold">Número de teléfono</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono"
+                       placeholder="+34 600 000 000" value="{{ datos_previos.telefono if datos_previos else '' }}" required>
+            </div>
+
+            <h4 class="text-success fw-bold mb-3 border-bottom pb-2">3. Tipo de cuenta y saldo</h4>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="cuenta" class="form-label fw-semibold">Selecciona un tipo de cuenta</label>
+                    <select id="cuenta" name="cuenta_tipo" class="form-select" required>
+                        <option value="Corriente" {% if datos_previos and datos_previos.cuenta_tipo == 'Corriente' %}selected{% endif %}>Cuenta corriente</option>
+                        <option value="Ahorro" {% if datos_previos and datos_previos.cuenta_tipo == 'Ahorro' %}selected{% endif %}>Cuenta de ahorro</option>
+                        <option value="Joven" {% if datos_previos and datos_previos.cuenta_tipo == 'Joven' %}selected{% endif %}>Cuenta joven</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="saldo" class="form-label fw-semibold">Saldo Inicial (€)</label>
+                    <input type="number" step="any" class="form-control {% if errores and errores.saldo %}is-invalid{% endif %}" id="saldo" name="saldo"
+                           placeholder="0.0" value="{{ datos_previos.saldo if datos_previos else '50.0' }}" required>
+                    {% if errores and errores.saldo %}
+                        <div class="invalid-feedback">{{ errores.saldo }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="condiciones" required>
+                <label class="form-check-label small text-muted" for="condiciones">
+                    Acepto las condiciones de uso y la política de privacidad.
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 py-3 fw-bold rounded-pill" style="background-color: #0b222d;">Crear cuenta bancaria</button>
+
+            <p class="text-center text-muted small mt-3">
+                Los datos se utilizarán para gestionar la solicitud de apertura de tu cuenta en Banco Altum.
+            </p>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

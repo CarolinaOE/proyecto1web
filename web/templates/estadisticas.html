@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Estadísticas - Altum{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="fw-bold mb-1">Estadísticas de {{ nombre_banco }}</h1>
+
+    {% if stats.total == 0 %}
+        <div class="alert alert-info">Todavía no hay clientes para calcular estadísticas.</div>
+    {% else %}
+    <div class="row g-4 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-3">
+                <div class="display-6 fw-bold">{{ stats.total }}</div>
+                <div class="text-muted">clientes en total</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-3">
+                <div class="display-6 fw-bold text-success">{{ stats.activos }}</div>
+                <div class="text-muted">activos</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-3">
+                <div class="display-6 fw-bold text-secondary">{{ stats.inactivos }}</div>
+                <div class="text-muted">inactivos</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 text-center p-3">
+                <div class="display-6 fw-bold">{{ '%.0f' | format(stats.activos / stats.total * 100) }}%</div>
+                <div class="text-muted">tasa de clientes activos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-4" style="background-color: #c0d6c6;">
+                <h5 class="fw-bold text-success">Dinero en el banco</h5>
+                <p class="mb-1">Saldo total: <strong>{{ '%.2f' | format(stats.saldo_total) }} €</strong></p>
+                <p class="mb-0">Saldo medio por cliente: <strong>{{ '%.2f' | format(stats.saldo_medio) }} €</strong></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100 p-4">
+                <h5 class="fw-bold text-success">Extremos</h5>
+                <p class="mb-1">Mayor saldo:
+                    <a href="{{ url_for('detalle', usuario_id=stats.mayor_saldo.id) }}">{{ stats.mayor_saldo.nombre }} {{ stats.mayor_saldo.apellido1 }}</a>
+                    ({{ '%.2f' | format(stats.mayor_saldo.saldo) }} €)
+                </p>
+                <p class="mb-0">Menor saldo:
+                    <a href="{{ url_for('detalle', usuario_id=stats.menor_saldo.id) }}">{{ stats.menor_saldo.nombre }} {{ stats.menor_saldo.apellido1 }}</a>
+                    ({{ '%.2f' | format(stats.menor_saldo.saldo) }} €)
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
